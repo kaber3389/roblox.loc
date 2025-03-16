@@ -9,13 +9,8 @@ export default defineNuxtConfig({
       tailwindcss(),
     ],
   },
-  ui: {
-    theme: {
-      colors: ['primary', 'secondary', 'tertiary', 'info', 'success', 'warning', 'error']
-    }
-  },
   css: ['./assets/css/app.css'],
-  modules: ['@nuxt/image', '@nuxt/scripts'],
+  modules: ['@nuxt/image', '@nuxt/scripts', '@nuxtjs/i18n', '@nuxtjs/color-mode'],
   runtimeConfig: {
     server: {
       apiKey: '111'
@@ -23,5 +18,15 @@ export default defineNuxtConfig({
     public: {
       apiBase: 'http://api.roblox.loc'
     }
+  },
+  i18n: {
+    lazy: true,
+    locales: [
+      {code: 'en', iso: 'en-US', file: 'en-US.json', name: 'English'},
+      {code: 'ru', iso: 'ru-RU', file: 'ru-RU.json',name: 'Русский'},
+    ],
+    defaultLocale: 'ru',
+    detectBrowserLanguage: false,
+    strategy: 'prefix',
   }
 })
