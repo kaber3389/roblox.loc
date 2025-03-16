@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-slate-800 text-white w-screen h-screen">
+    <div class="w-screen h-screen">
         <div class="container mx-auto px-[15%]">
             <header>
                 <ul class="flex flex-row gap-3">

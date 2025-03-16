@@ -15,7 +15,7 @@ export default defineNuxtConfig({
     }
   },
   css: ['./assets/css/app.css'],
-  modules: ['@nuxt/image', '@nuxt/scripts', '@nuxt/ui'],
+  modules: ['@nuxt/image', '@nuxt/scripts'],
   runtimeConfig: {
     server: {
       apiKey: '111'
