@@ -4,5 +4,5 @@
 </template>
 
 <script setup>
-const users = await $fetch('/api/user-index');
+const users = await $fetch('/api/user');
 </script>

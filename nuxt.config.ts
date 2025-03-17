@@ -16,7 +16,7 @@ export default defineNuxtConfig({
       apiKey: '111'
     },
     public: {
-      apiBase: 'http://api.roblox.loc'
+      apiBase: 'http://172.23.35.130:8781'
     }
   },
   i18n: {
@@ -28,5 +28,5 @@ export default defineNuxtConfig({
     defaultLocale: 'ru',
     detectBrowserLanguage: false,
     strategy: 'prefix',
-  }
+  },
 })

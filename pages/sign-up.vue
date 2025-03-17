@@ -1,7 +1,7 @@
 <script setup>
 const state = reactive({
     email: '',
-    full_name: '',
+    username: '',
     password: '',
     errors: []
 })
@@ -14,13 +14,18 @@ const onChangeInput = (field) => {
 }
 
 async function handleFormSubmit() {
-    const response = await $fetch('/api/user-create', {
+    const response = await $fetch('/api/user/create', {
         method: 'POST',
         body: state
     });
 
     if (response.status === 'success') {
-        //
+      await navigateTo({
+        path: '/sign-in',
+        query: {
+          'show-success-message': 1,
+        }
+      })
     } else {
         state.errors = response.data.errors;
     }
@@ -28,7 +33,6 @@ async function handleFormSubmit() {
 </script>
 
 <template>
-    {{state.errors}}
     <form @submit.prevent="handleFormSubmit" class="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
         <div class="mb-6">
             <label for="email" class="block text-sm font-medium text-gray-700">{{$t('Email')}}</label>
@@ -43,16 +47,16 @@ async function handleFormSubmit() {
             <span class="text-red-700" v-if="state.errors.email">{{state.errors.email.join()}}</span>
         </div>
         <div class="mb-6">
-            <label for="full_name" class="block text-sm font-medium text-gray-700">{{$t('Full name')}}</label>
+            <label for="username" class="block text-sm font-medium text-gray-700">{{$t('User name')}}</label>
             <input
                 type="text"
-                id="full_name"
-                v-model="state.full_name"
+                id="username"
+                v-model="state.username"
                 class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                :placeholder="$t('Input full name')"
-                @input.prevent="onChangeInput('full_name')"
+                :placeholder="$t('Input user name')"
+                @input.prevent="onChangeInput('username')"
             />
-            <span class="text-red-700" v-if="state.errors.full_name">{{state.errors.full_name.join()}}</span>
+            <span class="text-red-700" v-if="state.errors.username">{{state.errors.username.join()}}</span>
         </div>
         <div class="mb-6">
             <label for="password" class="block text-sm font-medium text-gray-700">{{$t('Password')}}</label>

@@ -4,14 +4,14 @@
             <div class="flex flex-row justify-between">
                 <header>
                     <ul class="flex flex-row gap-3">
-                        <li :class="{'active': route.path === '/'}" class="font-bold">
-                            <NuxtLink to="/">{{$t('Home')}}</NuxtLink>
+                        <li :class="{'active': route.path === `/${locale}`}" class="font-bold">
+                            <NuxtLinkLocale to="/">{{$t('Home')}}</NuxtLinkLocale>
                         </li>
-                        <li :class="{'active': route.path === '/sign-in'}" class="font-bold">
-                            <NuxtLink to="/sign-in">{{$t('Sign-in')}}</NuxtLink>
+                        <li :class="{'active': route.path === `/${locale}/sign-in`}" class="font-bold">
+                            <NuxtLinkLocale to="/sign-in" loca>{{$t('Sign-in')}}</NuxtLinkLocale>
                         </li>
-                        <li :class="{'active': route.path === '/sign-up'}" class="font-bold">
-                            <NuxtLink to="/sign-up">{{$t('Sign-up')}}</NuxtLink>
+                        <li :class="{'active': route.path === `/${locale}/sign-up`}" class="font-bold">
+                            <NuxtLinkLocale to="/sign-up">{{$t('Sign-up')}}</NuxtLinkLocale>
                         </li>
                     </ul>
                 </header>
@@ -27,6 +27,7 @@
 
 <script setup>
 const route = useRoute();
+const {locale} = useI18n();
 console.log(route)
 </script>
 
