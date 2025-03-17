@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async () => {
     const runtimeConfig = useRuntimeConfig();
 
     const response = await $fetch(`${runtimeConfig.public.apiBase}/user/index?apiKey=${runtimeConfig.server.apiKey}`, {

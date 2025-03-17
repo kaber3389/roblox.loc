@@ -71,12 +71,11 @@ async function handleFormSubmit() {
             <span class="text-red-700" v-if="state.errors.password">{{state.errors.password.join()}}</span>
         </div>
         <div>
-            <button
+            <Button
                 type="submit"
-                class="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out"
             >
                 {{$t('Send')}}
-            </button>
+            </Button>
         </div>
     </form>
 </template>
