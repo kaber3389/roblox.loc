@@ -1,7 +1,7 @@
 export default defineNuxtConfig({
-  compatibilityDate: '2024-11-01',
   devtools: { enabled: false },
   css: ['./assets/css/app.css'],
+
   modules: [
     '@nuxt/image',
     '@nuxt/scripts',
@@ -10,14 +10,16 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'shadcn-nuxt',
   ],
+
   runtimeConfig: {
     server: {
-      apiKey: '111'
+      apiKey: process.env.APP_API_KEY
     },
     public: {
-      apiBase: 'http://172.23.35.130:8781'
+      apiBase: process.env.APP_API_BASE
     }
   },
+
   i18n: {
     lazy: true,
     locales: [
@@ -28,15 +30,11 @@ export default defineNuxtConfig({
     detectBrowserLanguage: false,
     strategy: 'prefix',
   },
+
   shadcn: {
-    /**
-     * Prefix for all the imported component
-     */
     prefix: '',
-    /**
-     * Directory that the component lives in.
-     * @default "./components/ui"
-     */
     componentDir: './components/ui'
-  }
+  },
+
+  compatibilityDate: '2025-03-17'
 })
