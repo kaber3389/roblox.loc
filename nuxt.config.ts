@@ -4,6 +4,12 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   css: ['./assets/css/app.css'],
 
+  colorMode: {
+    classSuffix: '',
+    preference: 'system',
+    fallback: 'dark',
+  },
+
   modules: [
     '@nuxt/image',
     '@nuxt/scripts',

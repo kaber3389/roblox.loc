@@ -1,5 +1,5 @@
 <template>
-    <div class="w-screen h-screen">
+    <div class="bg-white dark:bg-black w-screen h-screen">
         <div class="container mx-auto px-[15%]">
             <div class="flex flex-row justify-between">
                 <header>
@@ -28,11 +28,4 @@
 <script setup>
 const route = useRoute();
 const {locale} = useI18n();
-console.log(route)
 </script>
-
-<style scoped>
-ul li.active a {
-    text-decoration: underline;
-}
-</style>
