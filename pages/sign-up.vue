@@ -5,6 +5,7 @@ const state = reactive({
     password: '',
     errors: []
 })
+const isLoading = ref(false)
 
 const onChangeInput = (field) => {
     if (!state.errors[field]) {
@@ -14,6 +15,7 @@ const onChangeInput = (field) => {
 }
 
 async function handleFormSubmit() {
+  isLoading.value = true;
     const response = await $fetch('/api/user/create', {
         method: 'POST',
         body: state
@@ -27,8 +29,10 @@ async function handleFormSubmit() {
         }
       })
     } else {
+      isLoading.value = false;
         state.errors = response.data.errors;
     }
+  isLoading.value = false;
 }
 </script>
 
@@ -71,11 +75,13 @@ async function handleFormSubmit() {
             <span class="text-red-700" v-if="state.errors.password">{{state.errors.password.join()}}</span>
         </div>
         <div>
-            <Button
+            <UButton
+                class="bg-amber-800 text-red-600"
+                :loading="isLoading"
                 type="submit"
             >
                 {{$t('Send')}}
-            </Button>
+            </UButton>
         </div>
     </form>
 </template>
