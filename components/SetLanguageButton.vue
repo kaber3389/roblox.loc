@@ -1,25 +1,24 @@
 <script setup>
-const { setLocale } = useI18n()
+const {setLocale} = useI18n()
 </script>
 
 <template>
-    <div>
-        <div>
-            <button @click="setLocale('ru')"
-                    :class="{'bg-blue-500 text-white': $i18n.locale === 'ru'}"
-                    class="hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-            >
-                RU
-            </button>
-            <button @click="setLocale('en')"
-                    :class="{'bg-blue-500 text-white': $i18n.locale === 'en'}"
-                    class="hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-            >
-                EN
-            </button>
-            <h2>{{ $t('welcome') }}</h2>
-        </div>
-    </div>
+  <div class="flex gap-2">
+    <UButton @click="setLocale('ru')"
+             :class="{'text-white': $i18n.locale === 'ru'}"
+             class="cursor-pointer"
+             variant="outline"
+    >
+      RU
+    </UButton>
+    <UButton @click="setLocale('en')"
+             :class="{'text-white': $i18n.locale === 'en'}"
+             class="cursor-pointer"
+             variant="outline"
+    >
+      EN
+    </UButton>
+  </div>
 </template>
 
 <style scoped>
