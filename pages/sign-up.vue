@@ -1,87 +1,92 @@
 <script setup>
 const state = reactive({
-    email: '',
-    username: '',
-    password: '',
-    errors: []
+  email: '',
+  username: '',
+  password: '',
+  errors: {}
 })
+
 const isLoading = ref(false)
 
+const toast = useToast()
+
 const onChangeInput = (field) => {
-    if (!state.errors[field]) {
-        return false;
-    }
-    state.errors[field] = '';
+  if (state.errors[field]) {
+    state.errors[field] = ''
+  }
+}
+
+function showToast() {
+  toast.add({ title: 'Success', description: 'The form has been submitted.', color: 'success' })
+  console.log(toast)
 }
 
 async function handleFormSubmit() {
-  isLoading.value = true;
-    const response = await $fetch('/api/user/create', {
-        method: 'POST',
-        body: state
-    });
+  isLoading.value = true
+  const response = await $fetch('/api/user/create', {
+    method: 'POST',
+    body: state
+  });
 
-    if (response.status === 'success') {
-      await navigateTo({
-        path: '/sign-in',
-        query: {
-          'show-success-message': 1,
-        }
-      })
+  if (response.status === 'success') {
+    toast.add({ title: 'Success', description: 'The form has been submitted.', color: 'success' })
+/*    await navigateTo({
+      path: '/sign-in',
+      query: {
+        'show-success-message': 1,
+      }
+    })*/
+  } else {
+    isLoading.value = false
+    if (response.data.errors) {
+      state.errors = response.data.errors
     } else {
-      isLoading.value = false;
-        state.errors = response.data.errors;
+      state.errors = { general: 'Произошла ошибка на сервере.' }
     }
-  isLoading.value = false;
+  }
+  isLoading.value = false
 }
 </script>
 
 <template>
-    <form @submit.prevent="handleFormSubmit" class="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-        <div class="mb-6">
-            <label for="email" class="block text-sm font-medium text-gray-700">{{$t('Email')}}</label>
-            <input
-                type="text"
-                id="email"
-                v-model="state.email"
-                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                :placeholder="$t('Input email')"
-                @input.prevent="onChangeInput('email')"
-            />
-            <span class="text-red-700" v-if="state.errors.email">{{state.errors.email.join()}}</span>
-        </div>
-        <div class="mb-6">
-            <label for="username" class="block text-sm font-medium text-gray-700">{{$t('User name')}}</label>
-            <input
-                type="text"
-                id="username"
-                v-model="state.username"
-                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                :placeholder="$t('Input user name')"
-                @input.prevent="onChangeInput('username')"
-            />
-            <span class="text-red-700" v-if="state.errors.username">{{state.errors.username.join()}}</span>
-        </div>
-        <div class="mb-6">
-            <label for="password" class="block text-sm font-medium text-gray-700">{{$t('Password')}}</label>
-            <input
-                type="password"
-                id="password"
-                v-model="state.password"
-                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                :placeholder="$t('Input password')"
-                @input.prevent="onChangeInput('password')"
-            />
-            <span class="text-red-700" v-if="state.errors.password">{{state.errors.password.join()}}</span>
-        </div>
-        <div>
-            <UButton
-                class="bg-amber-800 text-red-600"
-                :loading="isLoading"
-                type="submit"
-            >
-                {{$t('Send')}}
-            </UButton>
-        </div>
-    </form>
+  <UForm @submit="handleFormSubmit" :state="state" class="max-w-md mx-auto mt-10 p-6rounded-lg shadow-md">
+    <UFormField label="Email" name="email" class="mb-6">
+      <UInput
+          v-model="state.email"
+          :placeholder="$t('Input email')"
+          @input.prevent="onChangeInput('email')"
+      />
+      <span v-if="state.errors.email" class="text-red-600 text-sm mt-1 block">{{ state.errors.email.join() }}</span>
+    </UFormField>
+
+    <UFormField label="Username" name="username" class="mb-6">
+      <UInput
+          v-model="state.username"
+          :placeholder="$t('Input user name')"
+          @input.prevent="onChangeInput('username')"
+      />
+      <span v-if="state.errors.username" class="text-red-600 text-sm mt-1 block">{{ state.errors.username.join() }}</span>
+    </UFormField>
+
+    <UFormField label="Password" name="password" class="mb-6">
+      <UInput
+          type="password"
+          v-model="state.password"
+          :placeholder="$t('Input password')"
+          @input.prevent="onChangeInput('password')"
+      />
+      <span v-if="state.errors.password" class="text-red-600 text-sm mt-1 block">{{ state.errors.password.join() }}</span>
+    </UFormField>
+
+    <UButton
+        :loading="isLoading"
+        type="submit"
+    >
+      {{ $t('Send') }}
+    </UButton>
+
+    <UButton label="Show toast" @click="showToast" />
+
+    <span v-if="state.errors.general" class="text-red-600 mt-4 block">{{ state.errors.general }}</span>
+  </UForm>
 </template>

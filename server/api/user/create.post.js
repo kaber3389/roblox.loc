@@ -1,19 +1,33 @@
 export default defineEventHandler(async (event) => {
-    const body = await readBody(event);
-    const runtimeConfig = useRuntimeConfig();
+    try {
+        const body = await readBody(event);
 
-    body.apiKey = runtimeConfig.server.apiKey;
+        const {server, public: publicConfig} = useRuntimeConfig();
 
-    const response = await $fetch(`${runtimeConfig.public.apiBase}/user/create`, {
-        method: "POST",
-        body: body,
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    });
+        const requestBody = {
+            ...body,
+            apiKey: server.apiKey
+        };
 
-    return {
-        status: response.status,
-        data: response,
-    };
+        const response = await $fetch(`${publicConfig.apiBase}/user/create`, {
+            method: 'POST',
+            body: requestBody,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        return {
+            success: true,
+            status: response.status || 200,
+            data: response
+        };
+    } catch (error) {
+        return {
+            success: false,
+            status: error.response?.status || 500,
+            error: error.message || 'Произошла ошибка при создании пользователя',
+            data: null
+        };
+    }
 });

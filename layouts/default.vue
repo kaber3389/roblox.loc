@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white dark:bg-black w-screen h-screen">
+    <div class="bg-slate-100 dark:bg-slate-800 w-screen h-screen">
         <div class="container mx-auto px-[15%]">
             <div class="flex flex-row justify-between">
                 <header>
