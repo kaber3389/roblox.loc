@@ -16,10 +16,9 @@ export default defineEventHandler(async (event) => {
                 'Content-Type': 'application/json'
             }
         });
-
         return {
             success: true,
-            status: response.status || 200,
+            status: 200,
             data: response
         };
     } catch (error) {
